@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container{
+            display: grid;
+            grid-template-columns: auto auto auto;
+            justify-content: space-evenly;
+            box-sizing: border-box;
+            background: white;
+        }
+        .newdata{
+            border: 2px solid ;
+            border-style: none;
+            padding: 20px;
+            margin: 10px;
+            width: 20vw;
+            box-shadow: 20px 20px 0px 0px whitesmoke;
+        }
+        .newdata>h1{
+            color: lightslategray;
+        }
+        #inp1{
+            width: 20vw;
+            height: 5vh;
+        }
+        #inp2{
+            width: 20vw;
+            height: 5vh; 
+        }
+        #inp3{
+            width: 20vw;
+            height: 5vh; 
+        }
+        #inp4{
+            width: 20vw;
+            height: 5vh; 
+        }
+        #b1{
+            width: 20vw;
+            height: 5vh;
+            background: red;
+        }
+
+        
+        .update{
+            border: 2px solid black;
+            border-style: none;
+            box-shadow: 20px 20px 10px 10px whitesmoke;
+            padding: 20px;
+            margin: 10px;
+            width: 20vw;   
+        }
+        .update>h1{
+            color: lightslategray;
+        }
+        #inp5{
+            width: 20vw;
+            height: 5vh;
+        }
+        #inp6{
+            width: 20vw;
+            height: 5vh; 
+        }
+        #inp7{
+            width: 20vw;
+            height: 5vh; 
+        }
+        #inp8{
+            width: 20vw;
+            height: 5vh; 
+        }
+        #b2{
+            width: 20vw;
+            height: 5vh;
+            background: red;
+        }
+        .delete{
+            border: 2px solid black;
+            border-style: none;
+            box-shadow: 20px 20px 10px 10px whitesmoke;
+            padding: 20px;
+            margin: 10px;
+            width: 20vw;
+        }
+        .delete>h1{
+            color: lightslategray;
+        }
+        #inp9{
+            width: 20vw;
+            height: 5vh; 
+        }
+        #b3{
+            width: 20vw;
+            height: 5vh;
+            background: red;
+        }
+        #b4{
+            width: 20vw;
+            height: 5vh;
+            background: red;
+        }
+        .cards{
+            margin : 3%;
+            width: 300px;
+            text-align: center;
+            border-radius: 1px solid;
+            box-shadow: 0  5px 15px rgba(0,0,0,0.35) ;
+            overflow: hidden;
+            background: #ffff;
+            transition: transform 0.3s ease-in-out;
+            border-radius: 10px;
+
+        }
+        .parent{
+            display: grid;
+            grid-template-columns: auto auto auto auto;
+            gap: 2px 2px;
+        }
+    </style>
+</head>
+<body>
+        <div class="container">
+      <div class="newdata">
+        <h1>Add New Data</h1>
+        <form action="event.preventDefault(); post()">
+            <h3>Enter ID</h3>
+                <input type="text" id="inp1" placeholder="Enter product ID">
+            
+            <h3>Enter Name</h3>
+                <input type="text" id="inp2" placeholder="Enter product Name">
+            
+            <h3>Enter price</h3>
+                <input type="text" id="inp3" placeholder="Enter product price">
+            
+            <h3>Enter stock</h3>
+                <input type="text" id="inp4" placeholder="Enter stock quantity">
+            
+        </form><br>
+        <button onclick="post()" id="b1">Add Product</button>
+    </div>
+
+
+    <div class="update">
+        <h1>Update Data</h1>
+        <form action="event.preventDefault(); patch()">
+            <h3>Enter ID</h3>
+                <input type="text" id="inp5" placeholder="Enter product ID">
+            
+            <h3>Enter Name</h3>
+                <input type="text" id="inp6" placeholder="Enter product Name">
+            
+            <h3>Enter price</h3>
+                <input type="text" id="inp7" placeholder="Enter product price">
+            
+            <h3>Enter stock</h3>
+                <input type="text" id="inp8" placeholder="Enter stock quantity">
+            
+        </form><br>
+        <button onclick="patch()" id="b2">Update Product</button>
+    </div>
+
+
+    <div class="delete" id="deletedata">
+        <h1>Delete Data</h1>
+        <h3>Enter Id:</h3>
+        <form action>
+        <input type="text" id="inp9" placeholder="Enter Product ID"><br><br>
+        <button  onclick="del(event)" id="b3">Delete Product</button>
+         </form>
+        </div>
+        <center><button onclick="get()" id="b4">get</button></center>
+        </div>
+
+    <script>
+        async function get(){
+        let data=await fetch("http://localhost:3000/data")
+            let res=await data.json()
+            //console.log(res)
+        
+            let container=document.createElement("div")
+            container.classList.add("parent")
+        //container.style.display="grid"
+        //container.style.gridTemplateColumn="auto"
+        res.forEach((val)=>{
+            //console.log(val)
+            let child=document.createElement("div")
+            let child1=document.createElement("h3")
+            let child2=document.createElement("h3")
+            let child3=document.createElement("h3")
+            child.classList.add("cards")
+            child.innerText=val.id
+            child1.innerText=val.name
+            child2.innerText=val.price
+            child3.innerText=val.stock
+
+            child.append(child1,child2,child3)
+            container.append(child)
+        })
+        document.body.append(container)
+        console.log(container)
+      }
+
+        async function Post(){
+            let data=await fetch("http://localhost:3000/data")
+            let result=await data.json()
+            //console.log(result)
+        }
+        Post();
+        async function post(){
+        let inp1=document.getElementById("inp1").value
+        let inp2=document.getElementById("inp2").value
+        let inp3=document.getElementById("inp3").value
+        let inp4=document.getElementById("inp4").value
+        let obj={
+            id:inp1,
+            Name:inp2,
+            Price:inp3,
+            Stock:inp4        
+        }
+         let data=await fetch("http://localhost:3000/data",{
+            method:"POST",
+            headers:{
+                "content-Type":"application/json"
+            },
+            body:JSON.stringify(obj)
+        })
+        Post()
+    }
+    async function patch(){
+        let inp5=document.getElementById("inp5").value
+        let inp6=document.getElementById("inp6").value
+        let inp7=document.getElementById("inp7").value
+        let inp8=document.getElementById("inp8").value
+        let obj={
+            id:inp5,
+            name:inp6,
+            price:inp7,
+            stock:inp8
+        }
+        id=inp5;
+         console.log(id)
+        let data=await fetch(`http://localhost:3000/data/${id}`,{
+            method:"PATCH",
+            headers:{
+                "content-Type":"application/json"
+            },
+            body:JSON.stringify(obj)
+        })
+        get()
+    }
+
+    async function del(event){
+        event.preventDefault();
+        let inp9=document.getElementById("inp9").value
+        let obj={
+            id:inp9
+        }
+        id=inp9
+        console.log(id)
+        let data=await fetch(`http://localhost:3000/data/${id}`,{
+            method:"DELETE"
+         
+        })
+        get()
+    }
+    get()
+   
+            
+    </script>
+</body>
+</html>
