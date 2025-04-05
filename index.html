@@ -178,7 +178,7 @@
 
     <script>
         async function get(){
-        let data=await fetch("http://localhost:3000/data")
+        let data=await fetch("https://json-server-1-z8hc.onrender.com/data")
             let res=await data.json()
             //console.log(res)
         
@@ -206,7 +206,7 @@
       }
 
         async function Post(){
-            let data=await fetch("http://localhost:3000/data")
+            let data=await fetch("https://json-server-1-z8hc.onrender.com/data")
             let result=await data.json()
             //console.log(result)
         }
@@ -222,7 +222,7 @@
             Price:inp3,
             Stock:inp4        
         }
-         let data=await fetch("http://localhost:3000/data",{
+         let data=await fetch("https://json-server-1-z8hc.onrender.com/data",{
             method:"POST",
             headers:{
                 "content-Type":"application/json"
@@ -244,7 +244,7 @@
         }
         id=inp5;
          console.log(id)
-        let data=await fetch(`http://localhost:3000/data/${id}`,{
+        let data=await fetch(`https://json-server-1-z8hc.onrender.com/data${id}`,{
             method:"PATCH",
             headers:{
                 "content-Type":"application/json"
@@ -262,7 +262,7 @@
         }
         id=inp9
         console.log(id)
-        let data=await fetch(`http://localhost:3000/data/${id}`,{
+        let data=await fetch(`https://json-server-1-z8hc.onrender.com/data${id}`,{
             method:"DELETE"
          
         })
